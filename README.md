@@ -1,2 +1,2 @@
 # ts-squel
-Type Script for Squel
+Squel TypeScript definition
