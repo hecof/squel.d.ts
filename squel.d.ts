@@ -19,6 +19,7 @@ interface SqlSelect {
   limit(limit: number): SqlSelect
   offset(limit: number): SqlSelect
   top(num: number): SqlSelect
+  clone(): SqlSelect
   toString(): string
   toParam(options?: Object, numberedParametersStartAt?: number): { text: string, values: any[] }
 }
@@ -106,7 +107,6 @@ interface Squel extends QueryBuilder {
   useFlavour(s: string): QueryBuilder
   VERSION: string
   registerValueHandler<T>(type: T, handler: Handler): Squel
-  fval(func: string, ...args: any[])
 }
 
 declare module 'squel' {
