@@ -12,7 +12,7 @@ interface SqlSelect {
   right_join(name: string, alias?: string, condition?: string | any): SqlSelect
   outer_join(name: string, alias?: string, condition?: string | any): SqlSelect
   cross_join(name: string, alias?: string, condition?: string | any): SqlSelect
-  where(condition: string, ...args: any[]): SqlSelect
+  where(condition: string | Expression, ...args: any[]): SqlSelect
   order(field: string, direction?: boolean, ...args: any[]): SqlSelect
   group(field: string): SqlSelect
   having(condition: string | any, ...args: any[]): SqlSelect
