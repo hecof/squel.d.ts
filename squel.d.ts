@@ -96,17 +96,26 @@ interface QueryBuilderOptions {
 }
 
 interface QueryBuilder {
-  select(options?: QueryBuilderOptions, blocks?: Object[]) : SqlSelect
+  select(options?: QueryBuilderOptions, blocks?: Object[]): SqlSelect
   insert(options?: QueryBuilderOptions, blocks?: Object[]): SqlInsert
   update(options?: QueryBuilderOptions, blocks?: Object[]): SqlUpdate
   delete(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
   remove(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
 }
 
+interface Expression {
+  and(expr: string | Expression, options?: Object): Expression
+  or(expr: string | Expression, options?: Object): Expression,
+  clone(): Expression,
+  toString(): string,
+  toParam(): { text: string, values: any[] }
+}
+
 interface Squel extends QueryBuilder {
   useFlavour(s: string): QueryBuilder
   VERSION: string
   registerValueHandler<T>(type: T, handler: Handler): Squel
+  expr(): Expression
 }
 
 declare module 'squel' {
