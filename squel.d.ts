@@ -61,7 +61,7 @@ interface  SqlUpdate {
 
 interface SqlDelete {
   trget(table: string): SqlDelete
-  from(table: string, alias: string): SqlDelete
+  from(table: string, alias?: string): SqlDelete
   join(name: string, alias?: string, condition?: string): SqlDelete
   left_join(name: string, alias?: string, condition?: string): SqlDelete
   right_join(name: string, alias?: string, condition?: string): SqlDelete
