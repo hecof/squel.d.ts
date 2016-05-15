@@ -66,7 +66,7 @@ interface SqlDelete {
   left_join(name: string, alias?: string, condition?: string): SqlDelete
   right_join(name: string, alias?: string, condition?: string): SqlDelete
   outer_join(name: string, alias?: string, condition?: string): SqlDelete
-  where(condition: string): SqlDelete
+  where(condition: string, ...args: any[]): SqlDelete
   limit(limit: number): SqlDelete
   offset(limit: number): SqlDelete
   output(name: string, alias?: string): SqlDelete
