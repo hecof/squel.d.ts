@@ -22,6 +22,7 @@ interface SqlSelect {
   clone(): SqlSelect
   toString(): string
   toParam(options?: Object, numberedParametersStartAt?: number): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface SqlInsert {
@@ -39,6 +40,7 @@ interface SqlInsert {
   clone(): SqlInsert
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface  SqlUpdate {
@@ -57,6 +59,7 @@ interface  SqlUpdate {
   clone(): SqlInsert
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface SqlDelete {
@@ -78,6 +81,7 @@ interface SqlDelete {
   clone(): SqlDelete
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface QueryBuilderOptions {
