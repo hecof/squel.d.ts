@@ -1,0 +1,19 @@
+{
+  "name": "@types/squel",
+  "version": "1.0.0",
+  "description": "TypeScript definitions for Squel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warrenseymour/squel.d.ts.git"
+  },
+  "author": "Warren Seymour",
+  "bugs": {
+    "url": "https://github.com/warrenseymour/squel.d.ts/issues"
+  },
+  "homepage": "https://github.com/warrenseymour/squel.d.ts#readme",
+  "types": "squel.d.ts"
+}
