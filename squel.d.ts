@@ -105,6 +105,7 @@ interface QueryBuilder {
   update(options?: QueryBuilderOptions, blocks?: Object[]): SqlUpdate
   delete(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
   remove(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
+  expr(): Expression
 }
 
 interface Expression {
@@ -119,7 +120,6 @@ interface Squel extends QueryBuilder {
   useFlavour(s: string): QueryBuilder
   VERSION: string
   registerValueHandler<T>(type: T, handler: Handler): Squel
-  expr(): Expression
 }
 
 declare module 'squel' {
