@@ -8,19 +8,21 @@ interface SqlSelect {
   fields(fields: Object | any[]): SqlSelect
   from(name: string, alias?: string): SqlSelect
   join(name: string, alias?: string, condition?: string | any): SqlSelect
-  left_join(name: string, alias?: string, condition?: string | any): SqlSelect
-  right_join(name: string, alias?: string, condition?: string | any): SqlSelect
-  outer_join(name: string, alias?: string, condition?: string | any): SqlSelect
-  cross_join(name: string, alias?: string, condition?: string | any): SqlSelect
-  where(condition: string, ...args: any[]): SqlSelect
+  left_join(name: string | SqlSelect, alias?: string, condition?: string | any): SqlSelect
+  right_join(name: string | SqlSelect, alias?: string, condition?: string | any): SqlSelect
+  outer_join(name: string | SqlSelect, alias?: string, condition?: string | any): SqlSelect
+  cross_join(name: string | SqlSelect, alias?: string, condition?: string | any): SqlSelect
+  where(condition: string | Expression, ...args: any[]): SqlSelect
   order(field: string, direction?: boolean, ...args: any[]): SqlSelect
   group(field: string): SqlSelect
   having(condition: string | any, ...args: any[]): SqlSelect
   limit(limit: number): SqlSelect
   offset(limit: number): SqlSelect
   top(num: number): SqlSelect
+  clone(): SqlSelect
   toString(): string
   toParam(options?: Object, numberedParametersStartAt?: number): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface SqlInsert {
@@ -38,6 +40,7 @@ interface SqlInsert {
   clone(): SqlInsert
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface  SqlUpdate {
@@ -56,16 +59,17 @@ interface  SqlUpdate {
   clone(): SqlInsert
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface SqlDelete {
   trget(table: string): SqlDelete
-  from(table: string, alias: string): SqlDelete
+  from(table: string, alias?: string): SqlDelete
   join(name: string, alias?: string, condition?: string): SqlDelete
   left_join(name: string, alias?: string, condition?: string): SqlDelete
   right_join(name: string, alias?: string, condition?: string): SqlDelete
   outer_join(name: string, alias?: string, condition?: string): SqlDelete
-  where(condition: string): SqlDelete
+  where(condition: string, ...args: any[]): SqlDelete
   limit(limit: number): SqlDelete
   offset(limit: number): SqlDelete
   output(name: string, alias?: string): SqlDelete
@@ -77,6 +81,7 @@ interface SqlDelete {
   clone(): SqlDelete
   toString(): string
   toParam(options?: { numberedParametersStartAt?: number }): { text: string, values: any[] }
+  with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
 interface QueryBuilderOptions {
@@ -95,18 +100,26 @@ interface QueryBuilderOptions {
 }
 
 interface QueryBuilder {
-  select(options?: QueryBuilderOptions, blocks?: Object[]) : SqlSelect
+  select(options?: QueryBuilderOptions, blocks?: Object[]): SqlSelect
   insert(options?: QueryBuilderOptions, blocks?: Object[]): SqlInsert
   update(options?: QueryBuilderOptions, blocks?: Object[]): SqlUpdate
   delete(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
   remove(options?: QueryBuilderOptions, blocks?: Object[]): SqlDelete
+  expr(): Expression
+}
+
+interface Expression {
+  and(expr: string | Expression, options?: Object): Expression
+  or(expr: string | Expression, options?: Object): Expression,
+  clone(): Expression,
+  toString(): string,
+  toParam(): { text: string, values: any[] }
 }
 
 interface Squel extends QueryBuilder {
   useFlavour(s: string): QueryBuilder
   VERSION: string
   registerValueHandler<T>(type: T, handler: Handler): Squel
-  fval(func: string, ...args: any[])
 }
 
 declare module 'squel' {
